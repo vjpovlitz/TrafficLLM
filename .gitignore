@@ -1,0 +1,40 @@
+﻿# CUDA and PyTorch DLLs
+*.dll
+*.lib
+torch_cuda.dll
+cudnn_engines_precompiled64_9.dll
+cublasLt64_11.dll
+dnnl.lib
+
+# Data files
+*.arrow
+data-*.arrow
+data-*-of-*.arrow
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Data and outputs
+/data/
+/outputs/
+/datasets/
+/processed_data/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.mp4
+*.npy
+*.npz
+*.pt
+*.pth
+
+# IDE
+.idea/
+.vscode/
+*.swp
