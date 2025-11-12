@@ -1,0 +1,506 @@
+# ============================================================================
+# CLAUDE CODE & AI ASSISTANTS
+# ============================================================================
+.claude/
+.claude-cache/
+.cursor/
+.continue/
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dll
+*.dylib
+
+# C extensions
+*.c
+*.cpp
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+.pdm-python
+.pdm-build/
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.env
+.envrc
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ============================================================================
+# MACHINE LEARNING & LLM MODELS
+# ============================================================================
+# Model checkpoints and weights
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+*.h5
+*.hdf5
+*.keras
+*.onnx
+*.pb
+*.tflite
+*.mlmodel
+
+# Model directories
+checkpoints/
+weights/
+models/
+saved_models/
+pretrained/
+fine_tuned/
+model_cache/
+huggingface_cache/
+transformers_cache/
+
+# Training outputs
+runs/
+logs/
+tb_logs/
+tensorboard/
+wandb/
+mlruns/
+outputs/
+
+# Datasets (HuggingFace datasets)
+*.arrow
+data-*.arrow
+data-*-of-*.arrow
+dataset_dict.json
+dataset_info.json
+
+# CUDA and GPU libraries
+torch_cuda.dll
+cudnn_engines_precompiled64_9.dll
+cublasLt64_11.dll
+*.lib
+*.dll.a
+
+# ============================================================================
+# DATA & SCREENSHOTS
+# ============================================================================
+# Screenshot directories
+screenshots/
+enhanced_screenshots/
+fullscreen_screenshots/
+video_screenshots/
+test_screenshots/
+
+# Data directories
+data/
+raw_data/
+processed_data/
+datasets/
+training_data/
+validation_data/
+test_data/
+temp_data/
+
+# Image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.tif
+*.svg
+*.ico
+*.webp
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.m4v
+
+# Audio files
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+
+# Numpy/Pickle files
+*.npy
+*.npz
+*.pkl
+*.pickle
+
+# CSV and data files
+*.csv
+*.tsv
+*.parquet
+*.feather
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.bz2
+*.gz
+
+# ============================================================================
+# METADATA, REPORTS & LOGS
+# ============================================================================
+# Metadata directories
+metadata/
+*/metadata/
+*/*/metadata/
+
+# Reports
+reports/
+*/reports/
+*/*/reports/
+*_report.json
+*_report.md
+session_report_*.json
+video_session_report_*.json
+FULLSCREEN_SUCCESS_REPORT.md
+QUALITY_COMPARISON_REPORT.md
+ENHANCED_CAPTURE_SUCCESS_REPORT.md
+
+# Logs
+*.log
+logs/
+*/logs/
+*/*/logs/
+pipeline_*.log
+camera_manager_*.log
+
+# Test results
+test_results/
+*/test_results/
+*/*/test_results/
+
+# Evaluation results
+*_evaluation_results/
+quality_evaluation_results/
+FINAL_EVALUATION_RESULTS/
+
+# ============================================================================
+# IDE & EDITOR
+# ============================================================================
+# VSCode
+.vscode/
+.vscode-server/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ============================================================================
+# OPERATING SYSTEM
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# SELENIUM & WEB SCRAPING
+# ============================================================================
+# Chrome driver
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+*.crx
+
+# Browser data
+browser_data/
+selenium_cache/
+.chrome/
+
+# ============================================================================
+# CLOUD & DEPLOYMENT
+# ============================================================================
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# AWS
+.aws/
+
+# Google Cloud
+.gcloud/
+.config/gcloud/
+
+# ============================================================================
+# SENSITIVE DATA
+# ============================================================================
+# API Keys and secrets
+secrets.json
+credentials.json
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+.secrets/
+secret_*
+
+# Configuration with sensitive data
+*_secret.json
+*_private.json
+config_local.json
+.env.local
+.env.production
+
+# ============================================================================
+# TEMPORARY & CACHE FILES
+# ============================================================================
+# General temp
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# Cache
+.cache/
+*.cache
+cache/
+
+# Lock files (keep package manager locks, ignore others)
+*.lock
+!package-lock.json
+!yarn.lock
+!Pipfile.lock
+!poetry.lock
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+# Camera configuration backups
+camera_config.backup.json
+camera_config.*.json.bak
+
+# Enhanced screenshots subdirectories
+enhanced_screenshots/raw/
+enhanced_screenshots/validated/
+enhanced_screenshots/metadata/
+enhanced_screenshots/reports/
+enhanced_screenshots/logs/
+enhanced_screenshots_test/
+
+# Video capture
+video/
+*/video/
+video_capture/
+
+# Quality evaluation
+quality_evaluation/
+fullscreen_tests/
+
+# Legacy scripts outputs (deprecated scripts)
+myAPT_screenshots/
+sp_screenshots/
+cropped_screenshots/
