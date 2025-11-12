@@ -1,0 +1,71 @@
+Project Restructuring Report
+================================================================================
+
+Total changes: 65
+
+Changes made:
+  - Moved: CLAUDE.md → docs/CLAUDE_REFERENCE.md
+  - Moved: SETUP_AND_USAGE_GUIDE.md → docs/SETUP_GUIDE.md
+  - Moved: IMPLEMENTATION_STATUS.md → docs/IMPLEMENTATION_STATUS.md
+  - Moved: MODEL_REFINEMENT_PLAN.md → docs/MODEL_REFINEMENT.md
+  - Moved: PROJECT_IMPROVEMENT_PLAN.md → docs/PROJECT_PLAN.md
+  - Moved: FULLSCREEN_FIX_SUMMARY.md → docs/FULLSCREEN_FIX.md
+  - Moved: RESTRUCTURING_PLAN.md → docs/RESTRUCTURING_PLAN.md
+  - Moved: TrafficLLM/README.md → docs/OLD_README.md
+  - Moved: camera_config.json → config/camera_config.json
+  - Moved: TrafficLLM/scripts/data_collection/video_camera_config.json → config/video_camera_config.json
+  - Moved: TrafficLLM/trafficllm/model_preparation/test_dataloader.py → src/trafficllm/models/test_dataloader.py
+  - Moved: TrafficLLM/trafficllm/model_preparation/custom_model.py → src/trafficllm/models/custom_model.py
+  - Moved: TrafficLLM/trafficllm/model_preparation/attention_modules.py → src/trafficllm/models/attention_modules.py
+  - Moved: TrafficLLM/trafficllm/model_preparation/__init__.py → src/trafficllm/models/__init__.py
+  - Moved: TrafficLLM/trafficllm/model_preparation/improved_model.py → src/trafficllm/models/improved_model.py
+  - Moved: TrafficLLM/trafficllm/model_preparation/prepare_training.py → src/trafficllm/models/prepare_training.py
+  - Moved: TrafficLLM/trafficllm/data_processing/verify_dataset_Testing.py → src/trafficllm/data/verify_dataset_Testing.py
+  - Moved: TrafficLLM/trafficllm/data_processing/__init__.py → src/trafficllm/data/__init__.py
+  - Moved: TrafficLLM/trafficllm/data_processing/verify_and_cleanup.py → src/trafficllm/data/verify_and_cleanup.py
+  - Moved: TrafficLLM/trafficllm/data_processing/prepare_custom_data.py → src/trafficllm/data/prepare_custom_data.py
+  - Moved: TrafficLLM/trafficllm/data_processing/traffic_analysis.py → src/trafficllm/data/traffic_analysis.py
+  - Moved: TrafficLLM/trafficllm/data_processing/verify_full_dataset_Testing.py → src/trafficllm/data/verify_full_dataset_Testing.py
+  - Moved: TrafficLLM/trafficllm/data_processing/adapted_dataset.py → src/trafficllm/data/adapted_dataset.py
+  - Moved: TrafficLLM/trafficllm/data_processing/augmentations.py → src/trafficllm/data/augmentations.py
+  - Moved: TrafficLLM/trafficllm/data_processing/combine_chunks.py → src/trafficllm/data/combine_chunks.py
+  - Moved: TrafficLLM/trafficllm/data_processing/convert_dataset.py → src/trafficllm/data/convert_dataset.py
+  - Moved: TrafficLLM/trafficllm/training/improved_trainer.py → src/trafficllm/training/improved_trainer.py
+  - Moved: TrafficLLM/trafficllm/training/__init__.py → src/trafficllm/training/__init__.py
+  - Moved: TrafficLLM/trafficllm/training/train.py → src/trafficllm/training/train.py
+  - Moved: TrafficLLM/trafficllm/training/run_training.py → src/trafficllm/training/run_training.py
+  - Moved: TrafficLLM/trafficllm/training/test_trainer.py → src/trafficllm/training/test_trainer.py
+  - Moved: TrafficLLM/trafficllm/data_visualization/visualize_data.py → src/trafficllm/utils/visualization/visualize_data.py
+  - Moved: TrafficLLM/trafficllm/data_visualization/__init__.py → src/trafficllm/utils/visualization/__init__.py
+  - Moved: TrafficLLM/trafficllm/refinement/interactive_refinement.py → src/trafficllm/utils/refinement/interactive_refinement.py
+  - Moved: TrafficLLM/trafficllm/refinement/path_config.py → src/trafficllm/utils/refinement/path_config.py
+  - Moved: TrafficLLM/trafficllm/refinement/__init__.py → src/trafficllm/utils/refinement/__init__.py
+  - Moved: TrafficLLM/trafficllm/refinement/feedback_learner.py → src/trafficllm/utils/refinement/feedback_learner.py
+  - Moved: TrafficLLM/trafficllm/refinement/apply_feedback.py → src/trafficllm/utils/refinement/apply_feedback.py
+  - Moved: data_collection/enhanced_video_pipeline.py
+  - Moved: data_collection/fullscreen_enhanced_capture.py
+  - Moved: data_collection/spheadlessPipeline1.py
+  - Moved: data_collection/final_enhanced_camera_manager.py
+  - Moved: data_collection/SP.py
+  - Moved: data_collection/process_bay_bridge.py
+  - Moved: data_collection/image_validator.py
+  - Moved: data_collection/fullscreen_video_capture.py
+  - Moved: data_collection/fullscreen_capture.py
+  - Moved: data_collection/screenshotCroppedPipeline2.py
+  - Moved: data_collection/enhanced_pipeline.py
+  - Moved: data_collection/metadata_collector.py
+  - Moved: data_collection/camera_manager.py
+  - Moved: data_collection/test_fullscreen_capture.py
+  - Moved: data_collection/firstBayBridgeDataSet.py
+  - Moved: data_collection/test_video_capture.py
+  - Moved: data_collection/myAPTCamPipeline1.py
+  - Moved: data_collection/enhanced_camera_capture.py
+  - Moved test: __init__.py
+  - Moved test: test_simple.py
+  - Moved test: test_video_expand.py
+  - Moved test: test_fullscreen_final.py
+  - Moved test: test_fullscreen_capture.py
+  - Moved test: debug_video_controls.py
+  - Created: README.md
+  - Created: requirements.txt
+  - Created: setup.py
