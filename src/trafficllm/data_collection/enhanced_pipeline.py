@@ -17,9 +17,9 @@ from datetime import datetime
 project_root = Path(__file__).parent.parent.parent
 sys.path.append(str(project_root))
 
-from camera_manager import CameraManager
-from image_validator import ImageValidator, ROIDetector
-from metadata_collector import MetadataCollector, EnhancedCameraCapture
+from trafficllm.data_collection.camera_manager import CameraManager
+from trafficllm.data_collection.image_validator import ImageValidator, ROIDetector
+from trafficllm.data_collection.metadata_collector import MetadataCollector, EnhancedCameraCapture
 
 class EnhancedDataCollectionPipeline:
     """Complete data collection pipeline with validation and metadata"""

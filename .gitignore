@@ -173,7 +173,7 @@ cython_debug/
 # Model directories
 checkpoints/
 weights/
-models/
+# models/
 saved_models/
 pretrained/
 fine_tuned/

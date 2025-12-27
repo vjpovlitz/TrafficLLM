@@ -178,27 +178,58 @@ class CameraManager:
         
         self.logger.info(f"Saved camera configuration to {self.config_path}")
 
+    def _wait_for_video_playing(self, driver, timeout=30) -> bool:
+        """
+        Wait for video to be actively playing with valid data
+        """
+        start_time = time.time()
+        while (time.time() - start_time) < timeout:
+            try:
+                result = driver.execute_script("""
+                    var v = document.querySelector('video');
+                    if (v && v.offsetWidth > 0 && !v.paused && 
+                        v.currentTime > 0 && v.readyState >= 3) {
+                        return {playing: true, time: v.currentTime};
+                    }
+                    if (v && v.paused) { v.play(); }
+                    return {playing: false};
+                """)
+                
+                if result.get('playing'):
+                    return True
+                
+            except Exception:
+                pass
+            
+            time.sleep(1)
+        return False
+
     def _expand_video_fullscreen(self, driver) -> Dict:
         """
         Expand video element to fill viewport and remove all other page elements
         Returns: Dict with success status and any error messages
         """
         try:
+            # First ensure video is playing normally
+            if not self._wait_for_video_playing(driver):
+                return {'success': False, 'error': 'Video did not start playing'}
+
             result = driver.execute_script("""
                 var video = document.querySelector('video');
                 if (!video) return {success: false, error: 'No video element found'};
 
-                // Wait for video to be ready
-                if (video.readyState < 2) {
-                    return {success: false, error: 'Video not ready'};
+                // Request fullscreen if supported (optional, but good for state)
+                if (video.requestFullscreen) {
+                    try { video.requestFullscreen(); } catch(e) {}
                 }
 
-                // Clear page and show ONLY the video
+                // Nuclear option: Clear page and show ONLY the video
+                // 1. Detach video and clear everything
                 video.remove();
                 document.body.innerHTML = '';
                 document.body.appendChild(video);
 
-                // Reset body and html styles
+                // 2. Reset body and html styles
                 document.body.style.margin = '0';
                 document.body.style.padding = '0';
                 document.body.style.overflow = 'hidden';
@@ -207,7 +238,7 @@ class CameraManager:
                 document.documentElement.style.padding = '0';
                 document.documentElement.style.overflow = 'hidden';
 
-                // Make video fill entire viewport
+                // 3. Make video fill entire viewport
                 video.style.position = 'fixed';
                 video.style.top = '0';
                 video.style.left = '0';
@@ -219,11 +250,11 @@ class CameraManager:
                 video.style.objectFit = 'contain';
                 video.style.backgroundColor = 'black';
 
-                // Remove video controls
+                // 4. Remove video controls
                 video.removeAttribute('controls');
                 video.controls = false;
 
-                // Ensure video is playing
+                // 5. Ensure video is playing
                 if (video.paused) video.play();
 
                 return {
@@ -234,6 +265,17 @@ class CameraManager:
                     }
                 };
             """)
+            
+            if result and result.get('success'):
+                # Post-expansion verification
+                time.sleep(2)
+                still_playing = self._wait_for_video_playing(driver, timeout=10)
+                if not still_playing:
+                    # Try one last resume
+                    driver.execute_script("document.querySelector('video').play();")
+                    time.sleep(2)
+                return result
+            
             return result if result else {'success': False, 'error': 'Script returned null'}
 
         except Exception as e:
@@ -282,7 +324,12 @@ class CameraManager:
                 
                 # Navigate and capture
                 driver.get(camera.url)
-                time.sleep(5)  # Wait for page load
+                
+                # Wait for video to start playing (critical for both modes)
+                self.logger.info(f"Waiting for video to play on {camera.name}...")
+                video_playing = self._wait_for_video_playing(driver)
+                if not video_playing:
+                    self.logger.warning(f"Video did not start playing for {camera.name}, proceeding anyway")
 
                 # If fullscreen video mode is enabled, expand video to fill viewport
                 if fullscreen_video:
