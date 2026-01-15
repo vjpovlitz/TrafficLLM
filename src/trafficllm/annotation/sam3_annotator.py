@@ -4,8 +4,19 @@ SAM 3 Annotator Module
 Provides high-level interface for annotating traffic images using Meta's SAM 3.
 Generates segmentation masks and bounding boxes with text prompts.
 
+Supports multiple backends:
+    - HuggingFace transformers (recommended)
+    - Ultralytics SAM wrapper
+    - Native Meta SAM 3
+
 Usage:
-    annotator = SAM3Annotator(model_path="path/to/sam3_checkpoint")
+    # HuggingFace backend (recommended)
+    annotator = SAM3Annotator(backend="huggingface")
+
+    # Ultralytics backend (local weights)
+    annotator = SAM3Annotator(model_path="sam3.pt", backend="ultralytics")
+
+    # Run annotation
     results = annotator.annotate_image(
         image_path="traffic.jpg",
         prompts=["car", "truck", "bus"],
@@ -16,7 +27,7 @@ Usage:
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Optional, Union, Literal
 import numpy as np
 from PIL import Image
 import torch
@@ -114,24 +125,52 @@ class SAM3Annotator:
         model_path: Optional[str] = None,
         device: Optional[str] = None,
         class_mapping: Optional[Dict[str, int]] = None,
-        use_ultralytics: bool = True
+        backend: Literal["huggingface", "ultralytics", "native"] = "huggingface",
+        model_id: str = "facebook/sam2.1-hiera-large",
+        use_ultralytics: bool = None,  # Deprecated, use backend instead
     ):
         """
         Initialize SAM 3 annotator.
 
         Args:
-            model_path: Path to SAM 3 checkpoint. If None, downloads from HuggingFace.
-            device: Device for inference ('cuda' or 'cpu'). Auto-detects if None.
+            model_path: Path to SAM 3 checkpoint (for ultralytics/native backends).
+            device: Device for inference ('cuda', 'mps', 'cpu'). Auto-detects if None.
             class_mapping: Custom class name → ID mapping. Uses DEFAULT_CLASS_MAPPING if None.
-            use_ultralytics: Use Ultralytics SAM 3 wrapper (easier) vs native SAM 3
+            backend: Backend to use:
+                - "huggingface": Load from HuggingFace Hub (recommended)
+                - "ultralytics": Use Ultralytics SAM wrapper with local weights
+                - "native": Use native Meta SAM 3 implementation
+            model_id: HuggingFace model ID (for huggingface backend).
+                Options: "facebook/sam2.1-hiera-large", "facebook/sam3", etc.
+            use_ultralytics: Deprecated. Use backend="ultralytics" instead.
         """
-        self.device = device or ('cuda' if torch.cuda.is_available() else 'cpu')
+        # Auto-detect device
+        if device is None:
+            if torch.cuda.is_available():
+                device = 'cuda'
+            elif torch.backends.mps.is_available():
+                device = 'mps'
+            else:
+                device = 'cpu'
+
+        self.device = device
         self.class_mapping = class_mapping or self.DEFAULT_CLASS_MAPPING
-        self.use_ultralytics = use_ultralytics
+        self.model_id = model_id
 
-        logger.info(f"Initializing SAM 3 Annotator on {self.device}")
+        # Handle deprecated use_ultralytics parameter
+        if use_ultralytics is not None:
+            logger.warning("use_ultralytics is deprecated. Use backend='ultralytics' instead.")
+            backend = "ultralytics" if use_ultralytics else "native"
 
-        # Load model
+        self.backend = backend
+
+        logger.info(f"Initializing SAM 3 Annotator")
+        logger.info(f"  Backend: {self.backend}")
+        logger.info(f"  Device: {self.device}")
+        if self.backend == "huggingface":
+            logger.info(f"  Model: {self.model_id}")
+
+        # Load model based on backend
         self._load_model(model_path)
 
         logger.info("SAM 3 Annotator ready")
@@ -140,18 +179,39 @@ class SAM3Annotator:
         """
         Load SAM 3 model.
 
-        Supports two backends:
-        1. Ultralytics (recommended): Easier API, integrated with YOLO
-        2. Native SAM 3: More control, video tracking support
+        Supports three backends:
+        1. HuggingFace (recommended): Clean API, auto-downloads from Hub
+        2. Ultralytics: Easier API, integrated with YOLO
+        3. Native SAM 3: More control, video tracking support
         """
         try:
-            if self.use_ultralytics:
+            if self.backend == "huggingface":
+                self._load_huggingface_model()
+            elif self.backend == "ultralytics":
                 self._load_ultralytics_model(model_path)
             else:
                 self._load_native_sam3_model(model_path)
         except Exception as e:
             logger.error(f"Failed to load SAM 3 model: {e}")
             raise
+
+    def _load_huggingface_model(self):
+        """
+        Load SAM using HuggingFace transformers.
+
+        Requires:
+        - pip install transformers>=4.36.0 huggingface-hub accelerate
+        - huggingface-cli login (for gated models like SAM 3)
+        """
+        from .sam_hf_pipeline import SAM3HFPipeline, SAM3Config
+
+        config = SAM3Config(
+            model_id=self.model_id,
+            device=self.device,
+        )
+
+        self.hf_pipeline = SAM3HFPipeline(config)
+        logger.info(f"Loaded HuggingFace SAM: {self.model_id}")
 
     def _load_ultralytics_model(self, model_path: Optional[str] = None):
         """
@@ -271,8 +331,10 @@ class SAM3Annotator:
         else:
             raise ValueError(f"Unsupported image type: {type(image)}")
 
-        # Run inference
-        if self.use_ultralytics:
+        # Run inference based on backend
+        if self.backend == "huggingface":
+            results = self._annotate_huggingface(pil_image, prompts, conf_threshold)
+        elif self.backend == "ultralytics":
             results = self._annotate_ultralytics(pil_image, prompts, conf_threshold)
         else:
             results = self._annotate_native(image_array, prompts, conf_threshold)
